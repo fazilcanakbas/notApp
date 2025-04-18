@@ -6,10 +6,10 @@ const { width } = Dimensions.get("window");
 const DRAW_AREA_SIZE = width * 0.92;
 const DRAW_AREA_HEIGHT = 400;
 
-interface PdfViewerProps {
+type PdfViewerProps = {
   uri: string;
   style?: ViewStyle;
-}
+};
 
 export default function PdfViewer({ uri, style }: PdfViewerProps) {
   return (

@@ -3,17 +3,20 @@ import { View, TouchableOpacity, Text, Alert } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../types/navigation";
+
+type RootStackParamList = {
+  Drawing: { pdfUri: string };
+};
 
 export default function PdfPickerScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const pickPdf = async () => {
-    let result = await DocumentPicker.getDocumentAsync({ type: "application/pdf" });
-    if (result.assets && result.assets.length > 0) {
+    const result = await DocumentPicker.getDocumentAsync({ type: "application/pdf" });
+    if (result.assets && result.assets.length > 0 && result.assets[0].uri) {
       navigation.navigate("Drawing", { pdfUri: result.assets[0].uri });
     } else {
-      Alert.alert("Seçim iptal edildi");
+      Alert.alert("Seçim iptal edildi veya dosya alınamadı.");
     }
   };
 

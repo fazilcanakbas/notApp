@@ -1,31 +1,23 @@
 import React, { useEffect, useState } from "react";
-import DrawingPad from "../../src/components/DrawingPad";
+import DrawingPad from "../components/DrawingPad";
 import { getNote } from "../../utils/storage";
-import { useNavigation } from "@react-navigation/native";
-import { View } from "react-native";
-import { RouteProp } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useRoute, useNavigation, RouteProp } from "@react-navigation/native";
 
 type RootStackParamList = {
   NoteDetail: { noteId: string };
 };
 
-type NoteDetailScreenProps = {
-  route: RouteProp<RootStackParamList, 'NoteDetail'>;
-  navigation: NativeStackNavigationProp<RootStackParamList>;
-};
-
-export default function NoteDetailScreen({ route, navigation }: NoteDetailScreenProps) {
-  const { noteId } = route.params;
+export default function NoteDetailScreen() {
+  const route = useRoute<RouteProp<RootStackParamList, "NoteDetail">>();
+  const navigation = useNavigation();
   const [note, setNote] = useState<any>(null);
 
   useEffect(() => {
-    getNote(noteId).then(setNote);
-  }, [noteId]);
+    getNote(route.params.noteId).then(setNote);
+  }, [route.params.noteId]);
 
   if (!note) return null;
 
-  // note.pdfUri varsa o pdf, yoksa sadece çizim
   return (
     <DrawingPad
       noteId={note.id}
