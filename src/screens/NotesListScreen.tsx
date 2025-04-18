@@ -4,9 +4,9 @@ import { getNotes } from "../../utils/storage";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 
-export default function NotesListScreen() {
+export default function NotesListScreen({navigation}) {
   const [notes, setNotes] = useState<any[]>([]);
-  const navigation = useNavigation<NavigationProp<ParamListBase>>();
+  // const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const isFocused = useIsFocused();
 
   useEffect(() => {
